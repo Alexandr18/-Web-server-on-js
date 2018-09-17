@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<meta charset="utf-8">
+
+	<title>АИИСКУЭ<%= newsId %></title>
+
+	<meta name="viewport" content="width=device-width, inital-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+
+</head>
+	<body>
+
+			<div class="jumbotron text-center" style="background-color: white">
+  			<h1>S-tech <small>Система АИИСКУЭ id - <%= newsId %></small></h1>
+		</div>
+		<div class="">
+			<div class="container col-lg-6">
+					<h1>О системе</h1>
+					<div class="well">
+						<table class="table table-striped">
+						  <tbody>
+						    <tr>
+						      <th scope="row">1</th>
+						      <td>Адрес дома</td>
+						      <td><div id="adrr"></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">2</th>
+						      <td>ip адресс</td>
+						      <td><div id=ipAdrr></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">3</th>
+						      <td>ФИО владельца</td>
+						      <td><div id="name"></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">4</th>
+						      <td>Потреблено за прошлыый месяц</td>
+						      <td><div id="lastMounthP"></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">5</th>
+						      <td>Потребленно в этом месяце</td>
+						      <td><div id="atMounthP"></div></td>
+						      <tr>
+						      <th scope="row">6</th>
+						      <td>К оплате</td>
+						      <td><div id="cost"></div></td>
+
+						    </tr>
+
+						    </tr>
+						  </tbody>
+						</table>
+
+					</div>
+			</div>
+			<div class="container col-lg-6">
+					<h1>Профиль потребления</h1>
+					<div id="stat"></div>
+
+					<div class="well">
+						<div id="chart"></div>
+					</div>
+			</div>
+		</div>
+		<div>
+			<div class="container col-lg-6">
+				<h1>Общая информация</h1>
+					<div class="well">
+						<table class="table table-striped">
+							<thead>
+						      <tr>
+						        <th>№</th>
+						        <th>Показатель</th>
+						        <th>Значение</th>
+						      </tr>
+						    </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row">1</th>
+						      <td>Серийный номер счетчика</td>
+						      <td><div id="serNum"></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">2</th>
+						      <td>Всего потреблено</td>
+						      <td><div id=allP></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">3</th>
+						      <td>Потреблено по фазе А</td>
+						      <td><div id="ap"></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">4</th>
+						      <td>Потреблено по фазе В</td>
+						      <td><div id="bp"></div></td>
+
+						    </tr>
+						    <tr>
+						      <th scope="row">5</th>
+						      <td>Потреблено по фазе С</td>
+						      <td><div id="cp"></div></td>
+						     </tr>
+						     <tr>
+						      <th scope="row">6</th>
+						      <td>Напряжение на фазе А</td>
+						      <td><div id="ua"></div></td>
+						    </tr>
+						     <tr>
+						      <th scope="row">7</th>
+						      <td>Напряжение на фазе В</td>
+						      <td><div id="ub"></div></td>
+						    </tr>
+						     <tr>
+						      <th scope="row">8</th>
+						      <td>Напряжение на фазе С</td>
+						      <td><div id="uc"></div></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+			</div>
+			<div class="container col-lg-6">
+				<h1>Управление нагрузками</h1>
+					<div class="well">
+						<table class="table">
+						  <tbody>
+						  	<thead>
+						      <tr>
+						        <th>№</th>
+						        <th>Реле</th>
+						        <th>Состояние</th>
+						      </tr>
+						    </thead>
+						    <tr>
+						      <th scope="row">1</th>
+						      <td>Реле №1</td>
+						      <td><div id="rel1"></div></td>
+						    </tr>
+						    <tr>
+						      <th scope="row">2</th>
+						      <td>Реле №2</td>
+						      <td><div id="rel2"></div></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+			</div>
+		</div>
+	</body>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
+
+
+
+		<script>
+ $(function () {
+ $("#chart").shieldChart({
+ theme: "light",
+ primaryHeader: {
+ text: "Мощность потребления по фазам"
+ },
+ exportOptions: {
+ image: false,
+ print: false
+ },
+ axisY: [{
+ min: 1,
+ max: 60,
+ title: {
+ text: 'Мощность кВт',
+ style: {
+ color: '#4DB0F5'
+ }
+ },
+ axisTickText: {
+ style: {
+ color: '#4DB0F5'
+ }
+ }
+ }, {
+ min: 1,
+ max: 5,
+ title: {
+ text: 'Мощность кВт',
+ style: {
+ color: '#FFC500'
+ }
+ },
+ swapLocation: true,
+ axisTickText: {
+ style: {
+ color: '#FFC500'
+ }
+ }
+ }, {
+ min: 1,
+ max: 40,
+ title: {
+ text: 'Мощность кВт',
+ style: {
+ color: '#FF1800'
+ }
+ },
+ swapLocation: true,
+ axisTickText: {
+ style: {
+ color: '#FF1800'
+ }
+ }
+ }],
+ dataSeries: [{
+ seriesType: 'line',
+ axis: 0,
+ collectionAlias: "Фаза A",
+ data: [42.7, 52.8, 63.1, 23.5, 53, 55.8, 57.7]
+ }, {
+ seriesType: 'line',
+ axisY: 1,
+ collectionAlias: "Фаза Б",
+ data: [2.75, 2.80, 2, 2.55, 2.60, 2.90, 3.05]
+ }, {
+ seriesType: 'line',
+ axisY: 2,
+ collectionAlias: "Фаза С",
+ data: [20, 22.9, 32.1, 31, 22.8, 22.4, 32.10]
+ }]
+ });
+ });
+ </script><!-- /.График -->
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="data.json"></script>
+			 <script>
+	//Блок О системе
+			var mydata = JSON.parse(data);
+			var n=document.getElementById("name");
+			var a=document.getElementById("adrr");
+			var aIp=document.getElementById("ipAdrr");
+			var lm=document.getElementById("lastMounthP");
+			var atM=document.getElementById("atMounthP");
+			var c=document.getElementById("cost");
+
+
+			n.innerHTML=mydata[0].name1;
+			a.innerHTML=mydata[0].adrr;
+			aIp.innerHTML=mydata[0].ipAdrr;
+			lm.innerHTML=mydata[0].pLast+" кВт";
+			atM.innerHTML=mydata[0].pAtM+" кВт";
+			c.innerHTML=mydata[0].costForKillowatt*mydata[0].pAtM+" Руб.";
+
+	//Блок графика
+			var p=mydata[1].allP;
+			var z=document.getElementById("stat");
+			if (p<100) {z.innerHTML='<span class="badge" style="background-color: green">Нагрузка минимальная</span>'};
+			if (p<600||p>100) {z.innerHTML='<span class="badge badge-warning" style="background-color: #f89406">Штатная нагрзука</span>'};
+			if (p>600) {z.innerHTML='<span class="badge badge-important" style="background-color: #b94a48 ">Превышение нагрузки</span>'};
+	//Блок общая
+
+			var serN=document.getElementById("serNum");
+			var all=document.getElementById("allP");
+			var pFA=document.getElementById("ap");
+			var pFB=document.getElementById("bp");
+			var pFC=document.getElementById("cp");
+			var uFA=document.getElementById("ua");
+			var uFB=document.getElementById("ub");
+			var uFC=document.getElementById("uc");
+
+
+			serN.innerHTML=mydata[1].serNum;
+			all.innerHTML=mydata[1].allP+" кВт";
+			pFA.innerHTML=mydata[1].ap+" кВт";
+			pFB.innerHTML=mydata[1].bp+" кВт";
+			pFC.innerHTML=mydata[1].cp+" кВт";
+			uFA.innerHTML=mydata[1].au+" Вольт";
+			uFB.innerHTML=mydata[1].bu+" Вольт";
+			uFC.innerHTML=mydata[1].cu+" Вольт";
+
+		//Блок правление нагрузками
+		var idrel1=document.getElementById("rel1");
+		if (mydata[2].rel1==1) {idrel1.innerHTML="ВКЛ"} else {idrel1.innerHTML="ВЫКЛ"}
+		var idrel2=document.getElementById("rel2");
+		if (mydata[2].rel2==1) {idrel2.innerHTML="ВКЛ"} else {idrel2.innerHTML="ВЫКЛ"}
+
+		</script>
+
+
+
+		<noscript><div class="alert alert-danger">Включите поддержку JavaScript в своем браузере.</div></noscript>
+
+</html>
